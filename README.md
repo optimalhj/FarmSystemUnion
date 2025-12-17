@@ -1,54 +1,243 @@
-# farm_system_union(IoTogether) / 1주차 기술보고서
-##  - (산업시스템공학과 2022112386 김호준)
+# farm_system_union(IoTogether) / 6주차 기술보고서
+####   - (산업시스템공학과 2022112386 김호준)
 
 
-## 아두이노 IDE 다운로드와 설정 
+## 진정한 시작
 
-* 참고서 : 만들면서 배우는 아두이노 IoT 사물인터넷과 40개의 작품들
-  <div align="center">
-   <img width="458" height="627" alt="image" src="https://github.com/user-attachments/assets/a6e2891f-29b6-41d3-9dc1-27b86c345ad2" />
+ 본 조의 산출물 주제는 대학생들을 위한 강의실 환경 파악 시스템을 구성하는 것이다. 그만큼 공부를 하기 위한 환경이 좋은 곳을 찾아야 하는데, 해당 정보들을 수집하는 알맞은 센서들을 장착하여 작동시켜야 한다.
 
- 본 조(사물인터넷 1조)는 아두이노를 활용한 IoT기기를 제작을 목적으로 활동을 시작하였다. 우선 필자의 학과 뿐만 아니라 본 조의 조원 대부분의 학과에서도 똑같은 이름의 전공 수업인 '어드벤처디자인'이 있으며, 각자 해당 수업에서 아두이노를 만져본 적이 있다고 한다.
+ 그래서 이번 주는 실질적인 정보를 주는 온습도 센서(DHT11)를 장착하여 그 결과를 확인해보는 활동을 진행해보았다.
 
- 필자도 어드벤처디자인 강의를 들었고 아두이노 보드를 다뤄보기도 했지만, 3년 전의 활동이라 사실상 기억이 나지 않았고 조원 대부분이 직전 학기에서 Farm System Union에서 같은 주제로 아두이노를 만져보았다는 이야기를 하였다. 조원과의 원활한 소통을 위해서라면 강의에서의 기억을 되찾기 위해 다시 한 번 더 기초부터 아두이노를 다뤄야할 필요성을 느끼게 되었다.
+ 참고로 온습도 센서를 이용하는 이유는, 일단 공부를 위한 장소로 소음 측정도 가능하지만, 공부를 하는 데에 온도와 습도도 영향을 줄 것이라 판단하였기 때문이다.
 
- 다행히 이전 학기에 사물인터넷을 연구했던 조원들이 위의 참고서를 추천하여 공부에 매우 큰 도움이 되었다. 아직은 처음이기도 하고 아두이노 회로를 아직 보유하지 않았기에, 일단은 기본 설정만 바꿔주었다.
-
-
-
- <img src="https://github.com/user-attachments/assets/3681e97f-a4ca-4330-8b6c-43cc17661570">
- <img src="https://github.com/user-attachments/assets/c35f19bc-d70b-41ac-9ee4-93ce27658ad5">
-
+ 필자도 너무나 더울 때 또는 추울 때 집중력이 줄어들어 공부하기가 어려웠던 경험이 있었고 습도도 마찬가지로 공부에 영향을 받은 적이 있었다.
 
 ---
 
-## 사물인터넷 1조 회의 결과(회의 주제 : 프로젝트 방향 정하기)
+## 온습도 센서 활용
 
- 각자 어떤 주제들을 생각해왔는지 종합해보고 그중 하나를 선정하는 것이 첫 회의의 주된 내용이었다.
+ 먼저 우리의 시스템과 결합하기 전에, 아두이노에 온습도 센서 하나만 먼저 온습도 센서가 잘 작동되는지의 여부를 먼저 확인해보았다. 이번 활동은 교재의 도움을 많이 받았다.
+
+ 우선 해당 센서를 이용하기 위해서는 "DHT sensor library"라는 라이브러리를 먼저 IDE 내에서 다운로드 받아줘야 한다.
+
+ <div align="center">
+  <img width="241" src="https://github.com/user-attachments/assets/dd76172d-6df2-423c-ae2e-9c3598de12c8" />
+ </div>
+
+ 그다음 코드 내에서 해당 라이브러리를 이전 lcd 설치 작업과 비슷하게 "include"로 삽입해주고 적절한 코드를 작성하여 온도와 습도 모두 파악할 수 있다.
+
+ <div align="center">
+  <img width="700" src="https://github.com/user-attachments/assets/4625043e-e681-40cb-b98b-b29eab0e54c2" />
+ </div>
+
+ 위의 코드에서 확인할 수 있듯이, 헤더 이름은 "DHT.h"로 확인되고 온습도는 각각의 코드로 파악할 수 있는 것으로 확인된다.
+
+ 온도 : "dht.readTemperature()"   /    습도 : "dht.readHumidity()"
+
+ 실행 결과는 다음과 같이 잘 나오는 것을 확인해볼 수 있다.
+ <div align="center">
+  <img width="700" src="https://github.com/user-attachments/assets/001e6f93-be98-4232-aa59-efe895a91dbe" />
+ </div>
  
- #### 필자의 주제
- 
- 필자가 생각한 주제는 아두이노 간 I2C통신과 클라우드 시스템 이용한 서버(컴퓨터)의 물리적인 관리 체계를 만드는 것이다.
-    <div align="center">
-     <img width="542" height="451" alt="image" src="https://github.com/user-attachments/assets/845066e9-bb62-4a65-b6db-6540bbbda543" />
-  
-     출처:https://steemit.com/krarduino/@codingman/1-n-i2c
+---
 
-<div align="left">
- 여러 대의 컴퓨터가 설치되어 항시(24시간) 작동되고 있는 서버에서 각각의 컴퓨터가 이상이 발생하기 전에 조치를 취하기란 어려운 과제이다. '즉각적인 대처는 어려워도, 조기 이상현상 탐지 및 신호 전송 시스템은 만들 수 있지 않을까??', '아두이노로만으로도 이런 체계는 만들 수 있지 않을까??','해당 정보를 클라우드와 모바일에 바로 전송할 수 있는 시스템도 구현가능하지 않을까??' 라는 호기심에서 시작되었다.
+## 응용(기존 시스템과의 결합)
 
+ 이제는 거리를 측정해야하는 일이 사라졌으니 초음파 센서를 제거하고 대신 온습도 센서를 장착하여 제대로 연동이 되는지 알아보도록 하자.
 
- 필자가 구상한 시스템에서는 아두이노 우노 보드가 2개 이상 필요로 한다. 그중 하나는 자신를 제외한 모든 아두이노의 신호를 받기 위한 기기로 작동하여 "마스터 아두이노"라고 부르며, 나머지 기기들은 각자의 역할을 수행하는 "슬레이브 아두이노"라고 불린다. 컴퓨터에게도 서버상의 본인 위치를 저장한 IP주소가 있듯이, I2C 통신 시스템에서도 자신의 주소를 스스로 지정해야한다.
+ 추가해야 하는 코드들은 다음과 같다.
+
+ ```
+#include <DHT.h>
+
+#define DHTPIN D8
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+
+  // LCD 디스플레이 출력 내용 수정
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Tem C : ");
+  lcd.setCursor(0, 1);
+  lcd.print("Hum % : ");
+
+  dht.begin();
+
+}
+
+void loop() {
+
+  // 데이터 수집
+  float humi = dht.readHumidity();
+  float temp = dht.readTemperature();
+
+  Serial.print(temp);Serial.print("C ");
+  Serial.print(humi);Serial.println("%");
+
+  // 데이터 출력
+  if (temp >= 30 || humi >= 70){ # 온도는 30도 이상, 습도는 70% 이상
+    Serial.println("공부하기에 어렵습니다.");
+    lcd.setCursor(9, 0);
+    lcd.print(temp);
+    lcd.setCursor(9, 1);
+    lcd.print(humi);
+
+    if (WiFi.status() != WL_CONNECTED){
+      ~~~;
+    }
+    else {
+      sprintf(message, "공부하기에 어렵습니다. : %f C / %f %", temp, humi);
+    }
+
+ ```
+
+ 기존 시스템의 거리와 관련된 모든 항목들을 모두 온도와 습도로 수정하는 과정이 필요하다.
+
+ 우선 LCD 디스플레이에 첫 번째 줄은 온도를, 두 번째 줄은 습도를 출력할 수 있도록 작성하였다.
+
+ 이번에는 텔레그램에 출력하는 내용으로 만약 온도 또는 습도가 특정 수치 이상 올라간다면 텔레그램에 알림이 갈 수 있도록 작성된 모습을 확인할 수 있다.
+
+ - 초음파 센서 대신 온습도 센서가 결합된 아두이노의 모습이다.
    
- 이를 위하여 <Wire.h>라는 아두이노에서의 헤더 라이브러리를 학습해야하고, 그 외에 아두이노 클라우드도 활용할 수 있으면 클라우드의 가능성을 연구하는 등의 활동을 예상해볼 수 있다. 이를 프로젝트 목표들로 선정하여 조원과 같이 해당 주제로 연구하는 것도 고려해 볼 수 있다. 그래서 최종적으로 각각의 슬레이브 아두이노에 마이크센서, 온습도센서, 가스감지센서를 장착하여 화재나 소음 문제를 확인하고, 해당 문제를 마스터 아두이노에 보내, 이를 PC와 클라우드로 연동, 마지막으로 모바일로도 실시간 통신 체계를 구축하는 것을 주제로 생각하였다.
+   <div align="center">
+    <img width="720" src="https://github.com/user-attachments/assets/64b717c0-6e99-4316-9578-0e01b983b8fd" />
+   </div>
+   
+---
 
- <img width="2168" height="825" src="https://github.com/user-attachments/assets/58ea655d-8f38-49f7-afc0-bfa63481b2e6" />
+ ## 실행 결과
 
+  큰 환경 자체에 큰 이상이 없을 시, 다음과 같이 수집된 온도와 습도 데이터가 출력되는 모습을 확인할 수 있다.
+  
+  <div align="center">
+   <img width="1000" src="https://github.com/user-attachments/assets/09141a6b-e571-40ab-8f53-81661798d389" />
+  </div>
 
- #### 회의 결과
+  특정 조건(온도는 30도 이상, 습도는 70% 이상)이 되면 LCD 디스플레이, 시리얼 모니터, 텔레그램 알림의 모습이다. 다행히 모두 같은 수치를 잘 시각화해주는 모습을 확인해 줄 수 있었다.
 
- 회의 결과, 난이도는 필자가 생각한 위의 주제보다 더 낮고 단일 아두이노 보드로 구현 가능한 시스템인 소음 감지 시스템이 최종 주제로 선별되었다. 클라우드과 모바일 연동 부분에서 주된 연구 방향이 될 것으로 판단되며, 가장 많은 시간을 투자할 수 있도록 계획을 세웠다. 
- 
- 해당 시스템은 공부하는 학생들이 메인 타켓층이 될 수 있을만한 프로젝트이다. 공부하기에 최적인 장소, 예를 들어 소음이 적은 장소를 모바일 상으로 보여주는 시스템이다. 필자도 학부생인지라 큰 관심사를 잘 이끌어주었던 프로젝트라 판단하여 좋은 아이디어라고 생각한다.
+  텔레그램의 문자를 보니 각 출력문은 습도가 70%를 넘겼기에 문구가 출력됨을 알 수 있다.
 
- 동시에 동아리 프로젝트를 위한 10주 동안의 스케줄을 계획하기도 하였다. 1~3주차까지는 기본 개념을 다같이 공부할 예정이고, 4주차부터 본격적인 시스템 구축과 관련 지식을 쌓는 활동을 진행할 예정이다.
+- LCD 디스플레이
+
+  <div align="center">
+   <img width="750" src="https://github.com/user-attachments/assets/02397d78-06d9-41d4-ae15-27cfa956a2a6" />
+  </div>
+  
+- 시리얼 모니터
+  
+  <div align="center">
+   <img width="750" src="https://github.com/user-attachments/assets/7ff7605c-667c-40f9-885d-3cd36789ccdf" />
+  </div>
+  
+- 텔레그램
+  
+  <div align="center">
+   <img width="720" src="https://github.com/user-attachments/assets/03b76e46-d8fd-40ff-9587-cde0871bf386" />
+  </div>
+
+ ## 느낀 점
+
+  DHT11 센서도 또한 필자가 어드벤처디자인 과목에서 한 번 이용해보고 더 이상 사용하지 않았던 센서이기에, 이번 결과가 제대로 나올 수 있었을지 걱정을 많이 하였다.
+
+  다행히 출력되는 모든 기기에서 정상적으로 수치를 잘 받을 수 있었고, 이를 위하여 코드를 다시 수정해보고 적절한 결과를 얻기 위해 노력하는 과정이 재미가 있었다.
+
+ ## 최종 코드
+ ```
+#include <UniversalTelegramBot.h>
+#include <WiFiClientSecure.h>
+#include <ESP8266WiFi.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <DHT.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+char message[100];
+
+#define DHTPIN D8
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+#define WIFI_SSID ""//와이파이 이름
+#define WIFI_PASSWORD ""//와이파이 비밀번호
+
+#define BOT_TOKEN "8140194638:AAGOpEGxQ9Qf3nxU6sLhEFPsJLk23sPn7Jw"  //bot token
+#define CHAT_ID "5561347315"     //Chat ID
+
+WiFiClientSecure client;
+UniversalTelegramBot bot(BOT_TOKEN, client);
+
+void setup() {
+  Serial.begin(115200);
+
+  Serial.println("");
+  Serial.println("와이파이에 연결 중...");
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED){
+    Serial.print(".");
+    delay(1000);
+  }
+  Serial.println("");
+  Serial.println("와이파이 연결 완료.");
+  Serial.println();
+
+  configTime(0, 0, "pool.ntp.org");
+  time_t now = time(nullptr);
+  Serial.println("시간 동기화 중...");
+  while (now < 24 + 3600){
+    now = time(nullptr);
+    Serial.print(".");
+    delay(1000);
+  }
+  Serial.println("");
+  Serial.println("시간 동기화 완료.");
+  Serial.println("");
+
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Tem C : ");
+  lcd.setCursor(0, 1);
+  lcd.print("Hum % : ");
+
+  dht.begin();
+}
+
+void loop() {
+
+  float humi = dht.readHumidity();
+  float temp = dht.readTemperature();
+
+  Serial.print(temp);Serial.print("C ");
+  Serial.print(humi);Serial.println("%");
+
+  if (temp >= 30 || humi >= 70){
+    Serial.println("공부하기에 어렵습니다.");
+    lcd.setCursor(9, 0);
+    lcd.print(temp);
+    lcd.setCursor(9, 1);
+    lcd.print(humi);
+
+    if (WiFi.status() != WL_CONNECTED){
+      Serial.println("WiFi에 연결이 되어있지 않아 텔레그램으로 메시지를 전송할 수 없습니다.");
+    }
+    else {
+      sprintf(message, "공부하기에 어렵습니다. : %f C / %f %", temp, humi);
+      Serial.println("텔레그램을 통해 문자를 보냅니다.");
+      X509List cert(TELEGRAM_CERTIFICATE_ROOT);
+      client.setTrustAnchors(&cert);
+      bot.sendMessage(CHAT_ID, message, "");
+    }
+
+    for (int i = 0; i < 10; i++){
+      delay(1000);
+    }
+  }
+  delay(500);
+}
+ ```
