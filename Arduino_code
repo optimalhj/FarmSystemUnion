@@ -1,0 +1,71 @@
+
+#include <UniversalTelegramBot.h>
+#include <WiFiClientSecure.h>
+#include <ESP8266WiFi.h>
+
+#define WIFI_SSID ""       //와이파이 이름 입력 "WIFI_NAME"
+#define WIFI_PASSWORD ""   //와이파이 비밀번호 "123456"
+
+#define BOT_TOKEN "8140194638:AAGOpEGxQ9Qf3nxU6sLhEFPsJLk23sPn7Jw"  // bot token(숫자와 영문의 나열)
+#define CHAT_ID "5561347315"     // Chat_ID("숫자")
+
+#define TRIG_PIN D7
+#define ECHO_PIN D6
+
+WiFiClientSecure client;
+UniversalTelegramBot bot(BOT_TOKEN, client);
+
+void setup() {
+  Serial.begin(115200);
+
+  Serial.print("Connecting to AP");
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED){
+    Serial.print(".");
+    delay(200);
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected.");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
+
+  configTime(0, 0, "pool.ntp.org");
+
+  Serial.print("Waiting for time synchronization");
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  unsigned long duration = pulseIn(ECHO_PIN, HIGH);
+  float distanceCM = ((34000.0 * (float)duration) / 1000000.0) / 2.0;
+  Serial.println(distanceCM);
+
+  if (distanceCM > 2 && distanceCM < 20){
+    Serial.println("물체 감지!!");
+
+    time_t now = time(nullptr);
+    while (now < 24 + 3600){
+      delay(100);
+      Serial.print(".");
+      now = time(nullptr);
+    }
+    Serial.println(" TIME SYNCHRONIZED. ");
+
+    X509List cert(TELEGRAM_CERTIFICATE_ROOT);
+    client.setTrustAnchors(&cert);
+
+    bot.sendMessage(CHAT_ID, "물체가 감지되었습니다!!", "");
+    for (int i = 0; i < 10; i++){
+      delay(1000);
+    }
+  }
+  delay(100);
+}
