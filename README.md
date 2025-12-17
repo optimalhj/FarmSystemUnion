@@ -1,54 +1,189 @@
-# farm_system_union(IoTogether) / 1주차 기술보고서
+# farm_system_union(IoTogether) / 3주차 기술보고서
 ##  - (산업시스템공학과 2022112386 김호준)
 
 
-## 아두이노 IDE 다운로드와 설정 
+## 본격적인 아두이노 제어
 
-* 참고서 : 만들면서 배우는 아두이노 IoT 사물인터넷과 40개의 작품들
-  <div align="center">
-   <img width="458" height="627" alt="image" src="https://github.com/user-attachments/assets/a6e2891f-29b6-41d3-9dc1-27b86c345ad2" />
+  학교에서 아두이노 보드를 대여할 수 있다고 하여, 다행히 장비를 받고 본격적인 활동을 시작할 수 있게 되었다. 필자가 대여받은 기기는 무선 Wifi 모듈이 내장된 D1보드로 따로 무선 모듈을 추가할 필요가 없이 Wifi 기능을 활용할 수 있다.
 
- 본 조(사물인터넷 1조)는 아두이노를 활용한 IoT기기를 제작을 목적으로 활동을 시작하였다. 우선 필자의 학과 뿐만 아니라 본 조의 조원 대부분의 학과에서도 똑같은 이름의 전공 수업인 '어드벤처디자인'이 있으며, 각자 해당 수업에서 아두이노를 만져본 적이 있다고 한다.
-
- 필자도 어드벤처디자인 강의를 들었고 아두이노 보드를 다뤄보기도 했지만, 3년 전의 활동이라 사실상 기억이 나지 않았고 조원 대부분이 직전 학기에서 Farm System Union에서 같은 주제로 아두이노를 만져보았다는 이야기를 하였다. 조원과의 원활한 소통을 위해서라면 강의에서의 기억을 되찾기 위해 다시 한 번 더 기초부터 아두이노를 다뤄야할 필요성을 느끼게 되었다.
-
- 다행히 이전 학기에 사물인터넷을 연구했던 조원들이 위의 참고서를 추천하여 공부에 매우 큰 도움이 되었다. 아직은 처음이기도 하고 아두이노 회로를 아직 보유하지 않았기에, 일단은 기본 설정만 바꿔주었다.
-
-
-
- <img src="https://github.com/user-attachments/assets/3681e97f-a4ca-4330-8b6c-43cc17661570">
- <img src="https://github.com/user-attachments/assets/c35f19bc-d70b-41ac-9ee4-93ce27658ad5">
-
+<div align="center">
+ <img width="230" height="219" src="https://github.com/user-attachments/assets/c72caf80-2907-42a0-9c7d-c35bb563defb" />
+</div>
 
 ---
 
-## 사물인터넷 1조 회의 결과(회의 주제 : 프로젝트 방향 정하기)
+## 소프트웨어 셋업
 
- 각자 어떤 주제들을 생각해왔는지 종합해보고 그중 하나를 선정하는 것이 첫 회의의 주된 내용이었다.
+그 전에 아두이노 자체를 제어하기 위한 소프트웨어 설정을 모두 마쳐야 한다.
+
+아두이노는 USB를 통한 단순 데이터 통신이 아닌 시리얼 통신을 이용하기에 USB포트를 통한 시리얼 통신을 지원하기 위한 통칭 'CH340' 드라이버를 설치해야한다
+
+PC와 아두이노 기기가 연결되면, 장치 관리자에서 새로운 포트(USB Serial Port)가 나타나면서 제대로 설치되었는지 여부를 판단할 수 있다.
+<div align="center">
+ <img width="2559" height="1439" src="https://github.com/user-attachments/assets/9b9026b0-2ca4-4308-a2ae-2922110d566d" />
+</div>
+
+IDE 내부에서도 설정할 것이 존재한다. 필자는 D1 아두이노 보드를 활용할 계획이기에 해당 보드에 대한 정보를 IDE 내부로 불러와 통신을 원활하게 할 수 있도록 한다.
+
+새로 추가된 소프트웨어 포트에 맞게, 그리고 보유한 보드의 종류가 맞도록 설정을 변경하도록 한다.
+<div align="center">
+ <img width="500" src="https://github.com/user-attachments/assets/bbe31cb8-592d-4c2a-a8f9-2bc5d0cb9ec6" />
+</div>
+
+---
  
- #### 필자의 주제
+## 기기의 제어 확인
  
- 필자가 생각한 주제는 아두이노 간 I2C통신과 클라우드 시스템 이용한 서버(컴퓨터)의 물리적인 관리 체계를 만드는 것이다.
-    <div align="center">
-     <img width="542" height="451" alt="image" src="https://github.com/user-attachments/assets/845066e9-bb62-4a65-b6db-6540bbbda543" />
-  
-     출처:https://steemit.com/krarduino/@codingman/1-n-i2c
+ 기기의 상태의 확인할 겸, 초음파 센서를 활용한 거리 측정 코드를 작성하여 기기에 업로드 해보았다. 다행히 거리에 따른 출력이 정상 작동함을 확인해 볼 수 있었다.
+<div align="center">
+ <img width="400" src="https://github.com/user-attachments/assets/1491641d-51ca-400c-bfc9-5ddf5bf8414e" />
+ <img width="400" src="https://github.com/user-attachments/assets/5ce34346-6088-4222-8517-e8808522a927" />
 
-<div align="left">
- 여러 대의 컴퓨터가 설치되어 항시(24시간) 작동되고 있는 서버에서 각각의 컴퓨터가 이상이 발생하기 전에 조치를 취하기란 어려운 과제이다. '즉각적인 대처는 어려워도, 조기 이상현상 탐지 및 신호 전송 시스템은 만들 수 있지 않을까??', '아두이노로만으로도 이런 체계는 만들 수 있지 않을까??','해당 정보를 클라우드와 모바일에 바로 전송할 수 있는 시스템도 구현가능하지 않을까??' 라는 호기심에서 시작되었다.
+ <img width="2559" height="1439" src="https://github.com/user-attachments/assets/add42288-0b78-47f2-8d4f-ea6d57ac6181" />
+</div>
 
+ 여기서 호기심으로 LCD 디스플레이를 활용하면서 한 번 응용보았다. 교재에 작성된 것을 토대로 새롭게 코드를 작성해보았다.
 
- 필자가 구상한 시스템에서는 아두이노 우노 보드가 2개 이상 필요로 한다. 그중 하나는 자신를 제외한 모든 아두이노의 신호를 받기 위한 기기로 작동하여 "마스터 아두이노"라고 부르며, 나머지 기기들은 각자의 역할을 수행하는 "슬레이브 아두이노"라고 불린다. 컴퓨터에게도 서버상의 본인 위치를 저장한 IP주소가 있듯이, I2C 통신 시스템에서도 자신의 주소를 스스로 지정해야한다.
-   
- 이를 위하여 <Wire.h>라는 아두이노에서의 헤더 라이브러리를 학습해야하고, 그 외에 아두이노 클라우드도 활용할 수 있으면 클라우드의 가능성을 연구하는 등의 활동을 예상해볼 수 있다. 이를 프로젝트 목표들로 선정하여 조원과 같이 해당 주제로 연구하는 것도 고려해 볼 수 있다. 그래서 최종적으로 각각의 슬레이브 아두이노에 마이크센서, 온습도센서, 가스감지센서를 장착하여 화재나 소음 문제를 확인하고, 해당 문제를 마스터 아두이노에 보내, 이를 PC와 클라우드로 연동, 마지막으로 모바일로도 실시간 통신 체계를 구축하는 것을 주제로 생각하였다.
+ 하지만 LCD 디스플레이의 경우, I2C통신을 메인으로 하는 모듈이기도 하고, LCD를 위한 기본적인 명령문들이 초기적으로 없기 때문에, 각각을 보완해줄 수 있는 '라이브러리'를 설치해줘야 한다.
 
- <img width="2168" height="825" src="https://github.com/user-attachments/assets/58ea655d-8f38-49f7-afc0-bfa63481b2e6" />
+I2C통신을 위한 라이브러리는 자체적으로 내장되어 있어, #include로 바로 불러올 수 있지만,
 
+LCD 디스플레이 라이브러리는 IDE 자체에 포함된 '라이브러리 매니저'라는 창에서 따로 라이브러리를 설치하고 불러와야 한다.
 
- #### 회의 결과
+<div align="center">
+ <img width="300" src="https://github.com/user-attachments/assets/22f4c7b7-0ab9-487b-aac3-dc5dc2819fcc" />
+ <img width="650" src="https://github.com/user-attachments/assets/22ca61ec-681d-45fe-affa-0b2cf09bce00" />
+</div>
 
- 회의 결과, 난이도는 필자가 생각한 위의 주제보다 더 낮고 단일 아두이노 보드로 구현 가능한 시스템인 소음 감지 시스템이 최종 주제로 선별되었다. 클라우드과 모바일 연동 부분에서 주된 연구 방향이 될 것으로 판단되며, 가장 많은 시간을 투자할 수 있도록 계획을 세웠다. 
- 
- 해당 시스템은 공부하는 학생들이 메인 타켓층이 될 수 있을만한 프로젝트이다. 공부하기에 최적인 장소, 예를 들어 소음이 적은 장소를 모바일 상으로 보여주는 시스템이다. 필자도 학부생인지라 큰 관심사를 잘 이끌어주었던 프로젝트라 판단하여 좋은 아이디어라고 생각한다.
+다행히 이번에도 정상작동 함을 볼 수 있었다. 참고로 소수점 아래에 5자리가 출력된 것은, 코드가 반복될 때마다 LCD디스플레이를 초기화를 안하고 넘어가서이기 때문이다.
 
- 동시에 동아리 프로젝트를 위한 10주 동안의 스케줄을 계획하기도 하였다. 1~3주차까지는 기본 개념을 다같이 공부할 예정이고, 4주차부터 본격적인 시스템 구축과 관련 지식을 쌓는 활동을 진행할 예정이다.
+<div align="center">
+  <img width="2000" src="https://github.com/user-attachments/assets/a394633f-3f2b-46c8-8e34-7909d817cf91" />
+</div>
+
+---
+
+## 텔레그램 연동
+
+#### 텔레그램 설정
+
+저번주 조별 회의에서 '텔레그램'을 이용한 모바일 알림 시스템을 구축하기로 하였으므로, 텔레그램을 해당 기능을 구현해보고자 한다.
+
+우선 텔레그램에서 사용자를 위한 봇(bot)을 생성해야한다. "/start","/newbot","봇의 별명","봇의 이름"을 순서대로 입력하고,
+
+필자에게 부여된 토큰을 따라 Chat_ID를 파악하였다.
+
+<div align="center">
+ <img width="400" src="https://github.com/user-attachments/assets/750dd8af-d88f-4b50-bc77-5142e504dc58" />
+ <img width="400" src="https://github.com/user-attachments/assets/aa4c7347-d9a5-45ad-b1bf-bab0d6480a43" />
+ <img width="1919" height="1199" src="https://github.com/user-attachments/assets/5d451199-3a9d-442a-b2d5-f907c845ca3b" />
+</div>
+
+#### IDE 설정
+
+IDE에서는 텔레그램 연동을 위한 라이브러리인 "UniviersalTelegramBot.h"와 WiFi 설정을 만질 수 있는 관련 라이브러리들을 추가해줘야한다.
+
+텔레그램 연동용 라이브러리의 경우, 이전의 LCD디스플레이 라이브러리처럼 라이브러리 매니저에서 직접 추가할 수 있다.
+
+해당 과정은 조원들과 3차 회의이자 시스템 이해를 위한 테스트로 코드를 구현해 보았다. 참고로 위에서 작성하였던 초음파 센서와 연계해보았다.
+
+코드는 다음과 같다.
+
+```
+
+#include <UniversalTelegramBot.h>
+#include <WiFiClientSecure.h>
+#include <ESP8266WiFi.h>
+
+#define WIFI_SSID ""       //와이파이 이름 입력 "WIFI_NAME"
+#define WIFI_PASSWORD ""   //와이파이 비밀번호 "123456"
+
+#define BOT_TOKEN "8140194638:AAGOpEGxQ9Qf3nxU6sLhEFPsJLk23sPn7Jw"  // bot token(숫자와 영문의 나열)
+#define CHAT_ID "5561347315"     // Chat_ID("숫자")
+
+#define TRIG_PIN D7
+#define ECHO_PIN D6
+
+WiFiClientSecure client;
+UniversalTelegramBot bot(BOT_TOKEN, client);
+
+void setup() {
+  Serial.begin(115200);
+
+  Serial.print("Connecting to AP");
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED){
+    Serial.print(".");
+    delay(200);
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected.");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
+
+  configTime(0, 0, "pool.ntp.org");
+
+  Serial.print("Waiting for time synchronization");
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  unsigned long duration = pulseIn(ECHO_PIN, HIGH);
+  float distanceCM = ((34000.0 * (float)duration) / 1000000.0) / 2.0;
+  Serial.println(distanceCM);
+
+  if (distanceCM > 2 && distanceCM < 20){
+    Serial.println("물체 감지!!");
+
+    time_t now = time(nullptr);
+    while (now < 24 + 3600){
+      delay(100);
+      Serial.print(".");
+      now = time(nullptr);
+    }
+    Serial.println(" TIME SYNCHRONIZED. ");
+
+    X509List cert(TELEGRAM_CERTIFICATE_ROOT);
+    client.setTrustAnchors(&cert);
+
+    bot.sendMessage(CHAT_ID, "물체가 감지되었습니다!!", "");
+    for (int i = 0; i < 10; i++){
+      delay(1000);
+    }
+  }
+  delay(100);
+}
+
+```
+
+먼저 아두이노 기기가 WiFi에 먼저 연결되고, 루프문이 본격적으로 실행되는 구조다.
+
+이후, 초음파센서에서의 거리가 20cm 아래로 가까워질 때, 문자를 보내는 시스템이다. 
+
+다행히 필자의 세팅에서는 아두이노와 텔레그램이 서로 잘 연동되어 문자를 정해진 조건 下에서 수신받을 수 있었다.
+
+이로써 필자도 또한 무선 통신을 무사히(?) 구현할 수 있게 되었다.
+
+<div align="center">
+ <img width="400" src="https://github.com/user-attachments/assets/f30222fd-0611-4592-b961-5c36e8fda48c" />
+</div>
+
+---
+
+## 어려웠던 점
+
+기기 자체 또는 IDE 문제인지, 새롭게 코드를 작성하고 아두이노에 업로드를 하면, 이전에 설정한 코드를 토대로 아두이노가 작동하는 모습을 계속 볼 수 있었다.
+
+인터넷을 통해 아두이노의 리셋 버튼을 누르면서 업로드를 하면 코드를 바꿀 수 있음을 알아냈지만 이마저도 실패의 경우가 더 많았었다.
+
+본격적인 실습을 진행할 때에 해당 문제를 해결하느라 조원들에게 제대로 따라갈 수 있을지 또는 시간이 부족하지 않을지 불안감이 좀 있다.
+
+그래도 성공적으로 코드가 업로드되면, 그 역할을 버그 없이 수행한다는 점에서 다행이라고 느끼는 부분이다.
